@@ -1,0 +1,1 @@
+C:\Users\tosom\OneDrive\Documents\GitHub\ASP.NET-WebAPI\Flights\flights.client\obj\Debug\flights.client.esproj.CoreCompileInputs.cache

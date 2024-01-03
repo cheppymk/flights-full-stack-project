@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flights.Server", "Flights.Server\Flights.Server.csproj", "{29231504-3577-4539-9EB4-1F63156099FC}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "flights.client", "flights.client\flights.client.esproj", "{4D3D396A-5445-485A-836C-78355D75BE43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29231504-3577-4539-9EB4-1F63156099FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29231504-3577-4539-9EB4-1F63156099FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29231504-3577-4539-9EB4-1F63156099FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29231504-3577-4539-9EB4-1F63156099FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3D396A-5445-485A-836C-78355D75BE43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D3D396A-5445-485A-836C-78355D75BE43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D3D396A-5445-485A-836C-78355D75BE43}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4D3D396A-5445-485A-836C-78355D75BE43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D3D396A-5445-485A-836C-78355D75BE43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3D396A-5445-485A-836C-78355D75BE43}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15CA961E-069A-4D19-8EB8-B09E9BBAF322}
+	EndGlobalSection
+EndGlobal

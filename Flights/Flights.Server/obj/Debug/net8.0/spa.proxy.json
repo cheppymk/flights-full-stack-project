@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:4200",
+"RedirectUrl": "",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\tosom\\OneDrive\\Documents\\GitHub\\flights-full-stack-project\\Flights\\Flights.Server\\..\\flights.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
