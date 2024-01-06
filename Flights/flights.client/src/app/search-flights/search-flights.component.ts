@@ -10,26 +10,24 @@ import { FlightRm } from '../api/models';
 })
 export class SearchFlightsComponent implements OnInit {
 
-  searchResult: FlightRm[] = [];
+
+  searchResult: FlightRm[] = []
 
   constructor(private flightService: FlightService) { }
 
   ngOnInit(): void {
   }
 
-  search(): void {
-
-    this.flightService.flightGet({}).subscribe(
-      response => {
-        this.searchResult = response;
-      },
-      error => {
-        this.handleError(error);
-      }
-    );
+  search() {
+    this.flightService.searchFlight({})
+      .subscribe(response => this.searchResult = response,
+        this.handleError)
   }
 
-  private handleError(error: any): void {
-    console.error(error);
+  private handleError(err: any) {
+    console.log("Response Error. Status: ", err.status)
+    console.log("Response Error. Status Text: ", err.statusText)
+    console.log(err)
   }
+
 }

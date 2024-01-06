@@ -9,17 +9,9 @@ namespace Flights.Controllers
     {
         private readonly ILogger<FlightController> _logger;
 
-        public FlightController(ILogger<FlightController> logger)
-        {
-            _logger = logger;
-        }
+        static Random random = new Random();
 
-
-        Random random = new Random();
-
-        [HttpGet]
-        public IEnumerable<FlightRm> Search()
-            => new FlightRm[]
+        static private FlightRm[] flights = new FlightRm[]
             {
         new (   Guid.NewGuid(),
                 "American Airlines",
@@ -71,5 +63,32 @@ namespace Flights.Controllers
                     random.Next(1, 853))
             };
 
+        public FlightController(ILogger<FlightController> logger)
+        {
+            _logger = logger;
+        }
+       
+        
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [HttpGet]
+        public IEnumerable<FlightRm> Search()
+        => flights;
+
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(type: typeof(IEnumerable<FlightRm>), statusCode: 200)]
+        [HttpGet("{id}")]
+        public ActionResult<FlightRm> Find(Guid id)
+        {
+            var flight = flights.FirstOrDefault(f => f.Id == id);
+
+            if (flight == null)
+                return NotFound();
+
+            return Ok(flight);
+        }
     }
 }
