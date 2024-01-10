@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DWTEmAip2kXCMvj6JpcDMsX21MYdFqJ6Avnr6B9bZf6xB8rutXresDhitfGbmowXmi+XqXJY0kMYK0G5AOaOSw==",
+  "dgSpecHash": "4ZzLVejqscrdUfvJRyasA7RhxScCIDF6lp/ki9JEwhJELMnnK4a0Hjps8L/QKlmKAvcinUPcsdrvJuN9N1BUwA==",
   "success": true,
   "projectFilePath": "C:\\Users\\tosom\\OneDrive\\Documents\\GitHub\\flights-full-stack-project\\Flights\\Flights.Server\\Flights.Server.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\tosom\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.0\\microsoft.aspnetcore.spaproxy.8.0.0.nupkg.sha512",
+    "C:\\Users\\tosom\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.1\\microsoft.aspnetcore.spaproxy.8.0.1.nupkg.sha512",
     "C:\\Users\\tosom\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\tosom\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\tosom\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",

@@ -8,12 +8,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { FlightRm } from '../../models/flight-rm';
 
-export interface FlightIdGet$Params {
+export interface FindFlight$Params {
   id: string;
 }
 
-export function flightIdGet(http: HttpClient, rootUrl: string, params: FlightIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<FlightRm>>> {
-  const rb = new RequestBuilder(rootUrl, flightIdGet.PATH, 'get');
+export function findFlight(http: HttpClient, rootUrl: string, params: FindFlight$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<FlightRm>>> {
+  const rb = new RequestBuilder(rootUrl, findFlight.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {});
   }
@@ -28,4 +28,4 @@ export function flightIdGet(http: HttpClient, rootUrl: string, params: FlightIdG
   );
 }
 
-flightIdGet.PATH = '/Flight/{id}';
+findFlight.PATH = '/Flight/{id}';

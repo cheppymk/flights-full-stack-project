@@ -6,13 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { NewPassengerDto } from '../../models/new-passenger-dto';
 
-export interface FlightGet$Params {
+export interface RegisterPassenger$Params {
+      body?: NewPassengerDto
 }
 
-export function flightGet(http: HttpClient, rootUrl: string, params?: FlightGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, flightGet.PATH, 'get');
+export function registerPassenger(http: HttpClient, rootUrl: string, params?: RegisterPassenger$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, registerPassenger.PATH, 'post');
   if (params) {
+    rb.body(params.body, 'application/*+json');
   }
 
   return http.request(
@@ -25,4 +28,4 @@ export function flightGet(http: HttpClient, rootUrl: string, params?: FlightGet$
   );
 }
 
-flightGet.PATH = '/Flight';
+registerPassenger.PATH = '/Passenger';
