@@ -10,7 +10,8 @@ import { FlightRm } from '../api/models';
 })
 export class SearchFlightsComponent implements OnInit {
 
-  searchResult: FlightRm[] = [];
+
+  searchResult: FlightRm[] = []
 
   constructor(private flightService: FlightService) { }
 
@@ -19,22 +20,14 @@ export class SearchFlightsComponent implements OnInit {
 
   search() {
     this.flightService.searchFlight({})
-      .subscribe(
-        response => {
-          this.searchResult = response;
-        },
-        error => {
-          console.log("Response Error. Status: ", error.status);
-          console.log("Response Error. Status Text: ", error.statusText);
-          console.log(error);
-        }
-      );
+      .subscribe(response => this.searchResult = response,
+        this.handleError)
   }
 
   private handleError(err: any) {
-    console.log("Response Error. Status: ", err.status);
-    console.log("Response Error. Status Text: ", err.statusText);
-    console.log(err);
+    console.log("Response Error. Status: ", err.status)
+    console.log("Response Error. Status Text: ", err.statusText)
+    console.log(err)
   }
 
 }
