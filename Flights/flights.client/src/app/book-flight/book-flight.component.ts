@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from './../api/services/flight.service';
-import { FlightRm } from '../api/models';
+import { BookDto, FlightRm } from '../api/models';
 import { AuthService } from '../auth/auth.service';
+import {FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-flight',
@@ -14,10 +15,15 @@ export class BookFlightComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private flightService: FlightService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private fb: FormBuilder) { }
 
   flightId: string = 'not loaded'
   flight: FlightRm = {}
+
+  form = this.fb.group({
+    number:[1, Validators.compose([Validators.required, Validators.min(1), Validators.max(254)])]
+  })
 
   ngOnInit(): void {
 
@@ -48,4 +54,29 @@ export class BookFlightComponent implements OnInit {
     console.log(err)
   }
 
+  book() {
+
+if (this.form.invalid) {
+      return;
+    }
+    console.log(`Booking ${this.form.get('number')?.value} passengers for the flight: ${this.flight.id}`)
+
+    const numberOfSeats = this.form.get('number')?.value ?? 0;
+
+
+    const booking: BookDto = {
+      flightId: this.flight.id,
+      passengerEmail: this.authService.currentUser?.email,
+      numberOfSeats:numberOfSeats
+    }
+
+    this.flightService.bookFlight({ body: booking })
+      .subscribe(_ => this.router.navigate(['/my-bookings']),
+        this.handleError)
+        
+  }
+
+  get number() {
+    return this.form.controls.number
+  }
 }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PassengerService } from './../api/services/passenger.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
- 
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-passenger',
@@ -11,26 +10,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./register-passenger.component.css']
 })
 export class RegisterPassengerComponent implements OnInit {
-  form: FormGroup;
 
-  constructor(
-    private passengerService: PassengerService,
+  constructor(private passengerService: PassengerService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
-  ) {
-    this.form = this.fb.group({
-      email: [''],
-      firstName: [''],
-      lastName: [''],
-      isFemale: [true]  
-    });
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
+
+  requestedUrl?: string = undefined
+
+  form = this.fb.group({
+    email: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
+    firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])],
+    lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])],
+    isFemale: [true, Validators.required]
+  })
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(p => this.requestedUrl = p['requestedUrl'])
   }
 
-  ngOnInit(): void { }
-
   checkPassenger(): void {
-    const params = { email: this.form.get('email')?.value }
+    const email = this.form.get('email')?.value;
+    if (typeof email !== 'string') {
+      console.error('Email is required');
+      return;
+    }
+
+    const params = { email };
 
     this.passengerService
       .findPassenger(params)
@@ -42,31 +49,31 @@ export class RegisterPassengerComponent implements OnInit {
       )
   }
 
-  register() {
-    const transformedFormValue = this.transformFormValue(this.form.value);
-    console.log("Transformed Form Values:", transformedFormValue);
+  register(): void {
+    if (this.form.invalid) {
+      return;
+    }
 
-    this.passengerService.registerPassenger({ body: transformedFormValue })
-      .subscribe(
-        _ =>this.authService.loginUser({email:this.form.get('email')?.value}),
-        error => console.error("Error:", error)
+    console.log("Form Values:", this.form.value);
 
-      );
+    const email = this.form.get('email')?.value;
+    if (typeof email !== 'string') {
+      console.error('Email is required');
+      return;
+    }
+
+    this.passengerService.registerPassenger({ body: this.form.value })
+      .subscribe(this.login, console.error)
   }
 
-  private login = () => {
-    this.authService.loginUser({ email: this.form.get('email')?.value })
-    this.router.navigate(['/search-flights'])
-  }
+  private login = (): void => {
+    const email = this.form.get('email')?.value;
+    if (typeof email !== 'string') {
+      console.error('Email is required for login');
+      return;
+    }
 
-  private transformFormValue(formValue: any): any {
-    return {
-      email: formValue.email,
-      firstName: formValue.firstName,
-      lastName: formValue.lastName,
-      gender: formValue.isFemale ? 'Female' : 'Male' // Transform 'isFemale' to 'Gender'
-    };
+    this.authService.loginUser({ email });
+    this.router.navigate([this.requestedUrl ?? '/search-flights']);
   }
 }
-
-

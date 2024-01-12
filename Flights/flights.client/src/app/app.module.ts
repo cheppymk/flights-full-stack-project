@@ -10,6 +10,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { RouterModule } from '@angular/router';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RegisterPassengerComponent } from './register-passenger/register-passen
     SearchFlightsComponent,
     NavMenuComponent,
     BookFlightComponent,
-    RegisterPassengerComponent
+    RegisterPassengerComponent,
+    MyBookingsComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { RegisterPassengerComponent } from './register-passenger/register-passen
       { path: '', component: SearchFlightsComponent, pathMatch: 'full' },
       { path: 'search-flights', component: SearchFlightsComponent },
       { path: 'book-flight/:flightId', component: BookFlightComponent },
-      { path:'register-passenger', component: RegisterPassengerComponent}
+      { path: 'register-passenger', component: RegisterPassengerComponent },
+      { path:'my-bookings', component: MyBookingsComponent}
 
     ])
   ],

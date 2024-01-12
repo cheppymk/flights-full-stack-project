@@ -1,5 +1,6 @@
-using Flights.Server.ReadModels;
 using Microsoft.AspNetCore.Mvc;
+using Flights.Server.Dtos;
+using Flights.Server.ReadModels;
 
 namespace Flights.Controllers
 {
@@ -63,32 +64,52 @@ namespace Flights.Controllers
                     random.Next(1, 853))
             };
 
+        static private IList<BookDto> Bookings = new List<BookDto>();
+
         public FlightController(ILogger<FlightController> logger)
         {
             _logger = logger;
         }
-       
-        
-        [ProducesResponseType(404)]
+
+        [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<FlightRm>), 200)]
         public IEnumerable<FlightRm> Search()
         => flights;
 
-        [ProducesResponseType(404)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        [ProducesResponseType(type: typeof(IEnumerable<FlightRm>), statusCode: 200)]
-        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(FlightRm), 200)]
         public ActionResult<FlightRm> Find(Guid id)
         {
-            var flight = flights.FirstOrDefault(f => f.Id == id);
+            var flight = flights.SingleOrDefault(f => f.Id == id);
 
             if (flight == null)
                 return NotFound();
 
             return Ok(flight);
         }
+
+        [HttpPost]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        public IActionResult Book(BookDto dto)
+        {
+            System.Diagnostics.Debug.WriteLine($"Booking a new flight {dto.FlightId}");
+
+            var flightFound = flights.Any(f => f.Id == dto.FlightId);
+
+            if (flightFound == false)
+                return NotFound();
+
+            Bookings.Add(dto);
+            return CreatedAtAction(nameof(Find), new { id = dto.FlightId });
+        }
+
     }
 }
