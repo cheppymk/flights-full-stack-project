@@ -2,6 +2,7 @@
 using Flights.Domain.Entities;
 using Flights.Server.Domain.Entities;
 using Flights.Server.ReadModels;
+using Flights.Server.Data;
 
 namespace Flights.Controllers
 {
@@ -9,7 +10,12 @@ namespace Flights.Controllers
     [ApiController]
     public class PassengerController : ControllerBase
     {
-        static private IList<Passenger> Passengers = new List<Passenger>();
+        private readonly Entities _entities;
+
+        public PassengerController(Entities entities)
+        {
+                _entities = entities;
+        }
 
         [HttpPost]
         [ProducesResponseType(201)]
@@ -17,21 +23,22 @@ namespace Flights.Controllers
         [ProducesResponseType(500)]
         public IActionResult Register(NewPassengerDto dto)
         {
-            Passengers.Add(new Passenger(
+            _entities.Passengers.Add(new Passenger(
                 dto.Email,
                 dto.FirstName,
                 dto.LastName,
                 dto.Gender
                 ));
 
-            System.Diagnostics.Debug.WriteLine(Passengers.Count);
+            _entities.SaveChanges();
+          
             return CreatedAtAction(nameof(Find), new { email = dto.Email });
         }
 
         [HttpGet("{email}")]
         public ActionResult<PassengerRm> Find(string email)
         {
-            var passenger = Passengers.FirstOrDefault(p => p.Email == email);
+            var passenger = _entities.Passengers.FirstOrDefault(p => p.Email == email);
 
             if (passenger == null)
                 return NotFound();

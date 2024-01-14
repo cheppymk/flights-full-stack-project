@@ -34,3 +34,6 @@ C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flig
 C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flights.Server\obj\Debug\net8.0\Flights.Server.pdb
 C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flights.Server\obj\Debug\net8.0\Flights.Server.genruntimeconfig.cache
 C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flights.Server\obj\Debug\net8.0\ref\Flights.Server.dll
+C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flights.Server\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flights.Server\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\tosom\OneDrive\Documents\GitHub\flights-full-stack-project\Flights\Flights.Server\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
