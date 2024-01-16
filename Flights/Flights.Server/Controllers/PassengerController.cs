@@ -23,6 +23,13 @@ namespace Flights.Controllers
         [ProducesResponseType(500)]
         public IActionResult Register(NewPassengerDto dto)
         {
+            var existingPassenger = _entities.Passengers.FirstOrDefault(p => p.Email == dto.Email);
+            if (existingPassenger != null)
+            {
+                // Handle the case when the passenger with the same email already exists
+                // You can return a BadRequest or a custom message
+                return BadRequest("A passenger with the same email already exists.");
+            }
             _entities.Passengers.Add(new Passenger(
                 dto.Email,
                 dto.FirstName,
