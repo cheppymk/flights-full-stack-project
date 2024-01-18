@@ -4,6 +4,7 @@ using Flights.Server.ReadModels;
 using Flights.Server.Data;
 using Flights.Server.Domain.Errors;
 using Microsoft.EntityFrameworkCore;
+using Flights.Domain.Entities;
 
 namespace Flights.Controllers
 {
@@ -16,19 +17,42 @@ namespace Flights.Controllers
         private readonly Entities _entities;
 
 
-        public FlightController(ILogger<FlightController> logger,Entities entities)
+        public FlightController(ILogger<FlightController> logger, Entities entities)
         {
             _logger = logger;
             _entities = entities;
         }
-
         [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(typeof(IEnumerable<FlightRm>), 200)]
-        public IEnumerable<FlightRm> Search()
-        { 
-            var flightRmlist = _entities.Flights.Select(flight=> new FlightRm(
+        public IEnumerable<FlightRm> Search([FromQuery] FlightSearchParametars @params)
+        {
+
+            _logger.LogInformation("Searching for a flight for: {Destination}", @params.Destination);
+
+            IQueryable<Flight> flights = _entities.Flights;
+
+            if (!string.IsNullOrWhiteSpace(@params.Destination))
+                flights = flights.Where(f => f.Arrival.Place.Contains(@params.Destination));
+
+            if (!string.IsNullOrWhiteSpace(@params.From))
+                flights = flights.Where(f => f.Departure.Place.Contains(@params.From));
+
+            if (@params.FromDate != null)
+                flights = flights.Where(f => f.Departure.Time >= @params.FromDate.Value.Date);
+
+            if (@params.ToDate != null)
+                flights = flights.Where(f => f.Departure.Time >= @params.ToDate.Value.Date.AddDays(1).AddTicks(-1));
+
+            if (@params.NumberOfPassengers != 0 && @params.NumberOfPassengers != null)
+                flights = flights.Where(f => f.RemainingNumberOfSeats >= @params.NumberOfPassengers);
+            else
+                flights = flights.Where(f => f.RemainingNumberOfSeats >= 1);
+
+
+            var flightRmList = flights
+                .Select(flight => new FlightRm(
                 flight.Id,
                 flight.Airline,
                 flight.Price,
@@ -37,9 +61,9 @@ namespace Flights.Controllers
                 flight.RemainingNumberOfSeats
                 ));
 
-            return flightRmlist;
-
+            return flightRmList;
         }
+
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         [ProducesResponseType(400)]

@@ -1,0 +1,24 @@
+﻿using System.ComponentModel;
+
+namespace Flights.Server.Dtos
+{
+    public record FlightSearchParametars(
+
+        [DefaultValue("12/25/2023 10:30:00 AM")]
+        DateTime? FromDate,
+        
+        [DefaultValue("12/26/2023 10:30:00 AM")]
+        DateTime? ToDate,
+        
+        [DefaultValue("Los Angeles")]
+        string? From,
+        
+        [DefaultValue("Berlin")]
+        string? Destination,
+        
+        [DefaultValue(1)]
+        int? NumberOfPassengers
+        
+        );
+  
+}
